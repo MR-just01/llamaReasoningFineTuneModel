@@ -1,0 +1,17 @@
+# Core ML runtime
+torch==2.10.0
+
+# Hugging Face model and tokenizer
+transformers==5.15.1
+
+# GPU/device management
+accelerate==1.14.0
+
+# LoRA adapter support
+peft==0.20.0
+
+# PyTorch optimization compatibility
+torchao==0.16.0
+
+# Hugging Face model access
+huggingface_hub==1.11.0
