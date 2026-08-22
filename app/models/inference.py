@@ -56,6 +56,7 @@ def generate_response(
     response = tokenizer.decode(
         generated_tokens,
         skip_special_tokens=True,
+        clean_up_tokenization_spaces=False
     )
 
     return response.strip()
