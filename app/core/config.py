@@ -1,5 +1,13 @@
 import os
 
+from dotenv import load_dotenv
+
+
+# Loading variables from .env when running locally.
+# In environments such as Kaggle, variables can also
+# be supplied directly by the environment/secrets system.
+load_dotenv()
+
 
 MODEL_ID = os.getenv(
     "MODEL_ID",
