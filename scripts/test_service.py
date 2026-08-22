@@ -54,14 +54,7 @@ def main():
     request = GenerationRequest(
         instruction="Solve the following reasoning problem.",
         input="""
-The banker's discount on Rs. 1600 at 15% per annum is the same as true discount on Rs. 1680 for the same time and at the same rate. The time is:
-
-Choices:
- 1 months
- 4 months
- 7 months
- 9 months
- 4 months
+Quinton is looking to add 4 fruit trees to his backyard.  He wants to plant 2 apple trees that will be 10 feet wide each and need 12 feet between them.  The peach trees will be closer to the house and will grow to be 12 feet wide and will need 15 feet between each tree.  All told, how much space will these trees take up in his yard?
 """,
         max_new_tokens=256,
     )
