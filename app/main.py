@@ -31,9 +31,8 @@ async def lifespan(app: FastAPI):
     # ---------------------------------------------------------
     # APPLICATION STARTUP
     # ---------------------------------------------------------
-    #
+
     # Load the tokenizer and fine-tuned model once.
-    #
     print("Loading model...")
 
     tokenizer, model = load_model()
@@ -47,20 +46,20 @@ async def lifespan(app: FastAPI):
         tokenizer=tokenizer,
         model=model,
     )
+
+    # Store the service inside FastAPI's application state.
+    # API routes can access this same service for every request.
     app.state.generation_service = generation_service
+
     print("Generation service initialized.")
 
-    # The application is now ready to receive requests.
+    # Application is now ready to receive requests.
     yield
 
     # ---------------------------------------------------------
     # APPLICATION SHUTDOWN
     # ---------------------------------------------------------
-    #
-    # This code runs when the application stops.
-    #
-    # We release the references to the model and tokenizer.
-    #
+
     print("Shutting down application...")
 
     tokenizer = None
@@ -70,13 +69,29 @@ async def lifespan(app: FastAPI):
     print("Application shutdown complete.")
 
 
-# Create the FastAPI application.
+# ---------------------------------------------------------
+# CREATE FASTAPI APPLICATION
+# ---------------------------------------------------------
+
 app = FastAPI(
     title="Llama 3.2 Reasoning API",
     description="API for the fine-tuned Llama 3.2 reasoning model.",
     version="1.0.0",
     lifespan=lifespan,
 )
+
+
+# ---------------------------------------------------------
+# REGISTER API ROUTES
+# ---------------------------------------------------------
+#
+# This connects the router from routes.py to our FastAPI app.
+#
+# Without this, /generate will return:
+#
+#     404 Not Found
+#
+app.include_router(router)
 
 
 # ---------------------------------------------------------
