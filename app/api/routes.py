@@ -1,5 +1,9 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, HTTPException, Request
 
+from app.core.exceptions import (
+    ModelNotReadyError,
+    GenerationError,
+)
 from app.schemas.request import (
     GenerationRequest,
     GenerationResponse,
@@ -7,8 +11,6 @@ from app.schemas.request import (
 
 
 # Create the API router.
-#
-# The router contains the HTTP endpoints of our application.
 router = APIRouter()
 
 
@@ -23,18 +25,33 @@ def generate(
     """
     Generate a response using the fine-tuned Llama model.
 
-    Request:
-        instruction
-        input
-        max_new_tokens
-
-    Response:
-        response
+    The API route is responsible for:
+    - Receiving the HTTP request.
+    - Validating the request through Pydantic.
+    - Calling the generation service.
+    - Returning the API response.
+    - Converting known application errors into HTTP errors.
     """
 
-    # Get the GenerationService that was created
-    # during application startup.
+    # Get the service that was created during
+    # application startup.
     service = http_request.app.state.generation_service
 
-    # Pass the validated request to the service layer.
-    return service.generate(request)
+    try:
+        # Send the validated request to the service layer.
+        return service.generate(request)
+
+    except ModelNotReadyError as exc:
+        # Return a controlled HTTP 500 response instead
+        # of exposing the internal Python traceback.
+        raise HTTPException(
+            status_code=503,
+            detail=str(exc),
+        ) from exc
+    except GenerationError as exc:
+
+        # 500 means the model failed during generation.
+        raise HTTPException(
+            status_code=500,
+            detail=str(exc),
+        ) from exc

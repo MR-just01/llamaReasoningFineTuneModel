@@ -87,9 +87,6 @@ app = FastAPI(
 #
 # This connects the router from routes.py to our FastAPI app.
 #
-# Without this, /generate will return:
-#
-#     404 Not Found
 #
 app.include_router(router)
 

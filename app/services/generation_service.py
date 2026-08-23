@@ -1,12 +1,26 @@
+
+
+# ModelNotReadyError -> model/tokenizer is unavailable.
+# GenerationError    -> inference failed.
+from app.core.exceptions import (
+    ModelNotReadyError,
+    GenerationError,
+)
+
+
 # Import the existing inference function.
 # This function contains the actual Llama text-generation logic.
 from app.models.inference import generate_response
 
 
 # Import the request and response schemas.
+#
 # GenerationRequest  -> defines what data comes INTO the service.
-# GenerationResponse -> defines what data comes OUT of the service.
-from app.schemas.request import GenerationRequest, GenerationResponse
+# GenerationResponse -> defines what data goes OUT of the service.
+from app.schemas.request import (
+    GenerationRequest,
+    GenerationResponse,
+)
 
 
 class GenerationService:
@@ -19,7 +33,7 @@ class GenerationService:
     - Return the generated response in the required format.
 
     The service layer acts as a bridge between:
-    
+
         API layer
             ↓
         GenerationService
@@ -53,39 +67,60 @@ class GenerationService:
         request: GenerationRequest,
     ) -> GenerationResponse:
         """
-        Generate a model response for one request.
-
-        Input:
-            GenerationRequest
-            - instruction
-            - input
-            - max_new_tokens
-
-        Output:
-            GenerationResponse
-            - response
-
-        This method connects the API request format
-        with the existing model inference function.
+        Generate a response using the fine-tuned model.
         """
 
-        # Call the existing inference function.
+        # ---------------------------------------------------------
+        # CHECK MODEL AVAILABILITY
+        # ---------------------------------------------------------
         #
-        # We are NOT writing the generation logic again here.
-        # The actual tokenization and model.generate() logic
-        # already lives inside app/models/inference.py.
-        response = generate_response(
-            instruction=request.instruction,
-            user_input=request.input,
-            tokenizer=self.tokenizer,
-            model=self.model,
-            max_new_tokens=request.max_new_tokens,
-        )
+        # If the model or tokenizer is missing, generation
+        # cannot happen.
+        #
+        if self.model is None or self.tokenizer is None:
+            raise ModelNotReadyError(
+                "Model is not ready."
+            )
 
+        try:
+
+            # -----------------------------------------------------
+            # RUN MODEL INFERENCE
+            # -----------------------------------------------------
+            #
+            # Call the actual inference logic from inference.py.
+            #
+            response = generate_response(
+                instruction=request.instruction,
+                user_input=request.input,
+                tokenizer=self.tokenizer,
+                model=self.model,
+                max_new_tokens=request.max_new_tokens,
+            )
+
+        except Exception as exc:
+
+            # -----------------------------------------------------
+            # HANDLE INFERENCE FAILURE
+            # -----------------------------------------------------
+            #
+            # Convert the low-level Python/model error into
+            # an application-specific GenerationError.
+            #
+            # The original exception is preserved internally
+            # using "from exc".
+            #
+            raise GenerationError(
+                "Model generation failed."
+            ) from exc
+
+        # ---------------------------------------------------------
+        # RETURN STANDARD API RESPONSE
+        # ---------------------------------------------------------
+        #
         # Convert the raw model output into our defined
         # GenerationResponse schema.
         #
-        # This keeps the output format consistent for the API.
         return GenerationResponse(
             response=response
         )
