@@ -1,0 +1,51 @@
+id,category,difficulty,reasoning_type,question,expected_answer
+1,Logic,Easy,Deductive,"If five machines make five toys in five minutes, how long would 100 machines take to make 100 toys? Explain your reasoning.",5 minutes
+2,Logic,Easy,Deductive,All roses are flowers. Some flowers fade quickly. Can you conclude that all roses fade quickly? Explain.,No
+3,Logic,Easy,Pattern,"Which number comes next: 2, 4, 8, 16, ?",32
+4,Logic,Medium,Conditional,"If all A are B and all B are C, are all A C?",Yes
+5,Logic,Medium,Deductive,John is taller than Mary. Mary is taller than Sam. Who is tallest?,John
+6,Logic,Medium,Logic,A farmer has 17 sheep and all but 9 die. How many remain?,9
+7,Logic,Hard,Knights,A knight always tells the truth and a knave always lies. Alice says 'Bob is a knave.' Bob says 'We are both knights.' Who is the knight?,Alice knight; Bob knave
+8,Logic,Hard,Logic,Which weighs more: 1 kg of iron or 1 kg of cotton?,Same weight
+9,Logic,Hard,Calendar,"If today is Monday, what day will it be 100 days later?",Wednesday
+10,Logic,Hard,Reasoning,Three switches control three bulbs in another room. You may enter the room only once. How do you identify each switch?,Heat/light bulb method
+11,Mathematics,Easy,Arithmetic,What is 25 × 16?,400
+12,Mathematics,Easy,Arithmetic,Solve: 144 ÷ 12,12
+13,Mathematics,Easy,Percentage,A shirt costs $80 and is discounted by 25%. What is the sale price?,60
+14,Mathematics,Medium,Algebra,Solve: 2x + 5 = 17,6
+15,Mathematics,Medium,Ratio,"Flour:sugar=3:2. If flour is 9 cups, how much sugar?",6 cups
+16,Mathematics,Medium,Sequence,"Find next: 3,6,11,18,27,?",38
+17,Mathematics,Hard,Combinations,How many ways to choose 3 people from 8?,56
+18,Mathematics,Hard,Statistics,"Mean of 4,7,9,10,20",10
+19,Mathematics,Hard,Geometry,Area of rectangle 15×8,120
+20,Mathematics,Hard,Word Problem,Taxi charges $4 + $2 per mile. Cost for 13 miles.,30
+21,Probability,Easy,Probability,Probability of heads on a fair coin.,2-Jan
+22,Probability,Easy,Probability,Probability of rolling a 6 on a fair die.,6-Jan
+23,Probability,Easy,Conditional,Two fair coins tossed. Probability of exactly one head.,2-Jan
+24,Probability,Medium,Probability,"Bag has 3 red,2 blue. Probability of drawing red.",5-Mar
+25,Probability,Medium,Independence,Probability both dice show 6.,Jan-36
+26,Probability,Medium,Expected Value,Expected value of fair die.,3.5
+27,Probability,Hard,Bayes,"Medical test: 99% sensitivity,95% specificity,1% prevalence. Does positive imply disease?",No; positive predictive value is much lower
+28,Probability,Hard,Cards,Probability of drawing an ace from a standard deck.,13-Jan
+29,Probability,Hard,Sampling,"5 green,5 yellow. Draw 2 without replacement. Both green?",9-Feb
+30,Probability,Hard,Conditional,"Two-child family, at least one boy. Probability both boys.",3-Jan
+31,Coding,Easy,Python,"What does len([1,2,3]) return?",3
+32,Coding,Easy,Debugging,Fix: for i in range(5): print(i) if expected output is 1 to 5.,"Use range(1,6)"
+33,Coding,Easy,Complexity,Time complexity of binary search.,O(log n)
+34,Coding,Medium,Python,Output of print(2**3),8
+35,Coding,Medium,Data Structures,Which data structure is FIFO?,Queue
+36,Coding,Medium,Sorting,Name one O(n log n) average sorting algorithm.,Merge sort / Heap sort / Quicksort
+37,Coding,Hard,Recursion,What is the base case in recursion?,Stopping condition
+38,Coding,Hard,Trees,Which traversal uses a queue?,Breadth-First Search
+39,Coding,Hard,Complexity,Time complexity of linear search.,O(n)
+40,Coding,Hard,Debugging,Why can a while loop become infinite?,Condition never becomes false
+41,Planning,Easy,Scheduling,Create a 4-hour study schedule with 10-minute breaks.,Reasonable schedule
+42,Planning,Easy,Prioritization,"Urgent assignment, exam tomorrow, laundry. What first?",Prioritize urgent/high-impact work
+43,Planning,Easy,Time Management,2 hours to study 5 chapters. Suggest strategy.,Time-block with prioritization
+44,Planning,Medium,Resource Allocation,"Plan a weekend for project, exercise, family.",Balanced plan
+45,Planning,Medium,Decision Making,Budget $500 for laptop upgrade. What factors matter?,"Needs, performance, value"
+46,Planning,Medium,Project Planning,Outline a one-week Python web app plan.,Requirements→development→testing
+47,Planning,Hard,Constraint Satisfaction,Schedule five meetings with one-hour lunch and no overlaps.,Conflict-free schedule
+48,Planning,Hard,Optimization,Choose shortest route across four locations and justify.,Travel-minimizing plan
+49,Planning,Hard,Learning Plan,Create a 30-day ML learning roadmap.,Weekly milestones
+50,Planning,Hard,Risk Analysis,Three software project risks and mitigations.,Valid risks with mitigations
