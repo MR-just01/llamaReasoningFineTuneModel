@@ -1,5 +1,6 @@
 
-
+import logging
+import time     
 # ModelNotReadyError -> model/tokenizer is unavailable.
 # GenerationError    -> inference failed.
 from app.core.exceptions import (
@@ -21,6 +22,8 @@ from app.schemas.request import (
     GenerationRequest,
     GenerationResponse,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class GenerationService:
@@ -69,7 +72,7 @@ class GenerationService:
         """
         Generate a response using the fine-tuned model.
         """
-
+        start_time = time.perf_counter()
         # ---------------------------------------------------------
         # CHECK MODEL AVAILABILITY
         # ---------------------------------------------------------
@@ -83,7 +86,7 @@ class GenerationService:
             )
 
         try:
-
+            logger.info("Starting model generation.")
             # -----------------------------------------------------
             # RUN MODEL INFERENCE
             # -----------------------------------------------------
@@ -97,6 +100,12 @@ class GenerationService:
                 model=self.model,
                 max_new_tokens=request.max_new_tokens,
             )
+            latency = time.perf_counter() - start_time
+
+            logger.info(
+                "Model generation completed in %.3f seconds.",
+                latency,
+            )
 
         except Exception as exc:
 
@@ -109,7 +118,12 @@ class GenerationService:
             #
             # The original exception is preserved internally
             # using "from exc".
-            #
+            latency = time.perf_counter() - start_time
+
+            logger.exception(
+        "Model generation failed after %.3f seconds.",
+        latency,
+    )
             raise GenerationError(
                 "Model generation failed."
             ) from exc

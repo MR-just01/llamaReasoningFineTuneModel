@@ -6,6 +6,16 @@ from app.api.routes import router
 from app.models.loader import load_model
 from app.services.generation_service import GenerationService
 
+import logging
+import time
+from app.core.logging import setup_logging
+
+# Configure application logging.
+setup_logging()
+
+#  logger for this module.
+logger = logging.getLogger(__name__)
+
 
 # These variables will hold the model components
 # after the application starts.
@@ -33,11 +43,11 @@ async def lifespan(app: FastAPI):
     # ---------------------------------------------------------
 
     # Load the tokenizer and fine-tuned model once.
-    print("Loading model...")
+    logger.info("Loading model...")
 
     tokenizer, model = load_model()
 
-    print("Model loaded successfully.")
+    logger.info("Model loaded successfully.")
 
     # Create the service once.
     #
@@ -51,7 +61,7 @@ async def lifespan(app: FastAPI):
     # API routes can access this same service for every request.
     app.state.generation_service = generation_service
 
-    print("Generation service initialized.")
+    logger.info("Generation service initialized.")
 
     # Application is now ready to receive requests.
     yield
@@ -60,13 +70,13 @@ async def lifespan(app: FastAPI):
     # APPLICATION SHUTDOWN
     # ---------------------------------------------------------
 
-    print("Shutting down application...")
+    logger.info("Shutting down application...")
 
     tokenizer = None
     model = None
     generation_service = None
 
-    print("Application shutdown complete.")
+    logger.info("Application shutdown complete.")
 
 
 # ---------------------------------------------------------
@@ -109,3 +119,31 @@ def health_check():
         "status": "healthy",
         "model_loaded": model is not None,
     }
+@app.middleware("http")
+async def log_request_latency(request, call_next):
+    """
+    Measure the total time taken to process an HTTP request.
+
+    This includes:
+    - FastAPI request handling
+    - validation
+    - service execution
+    - model inference
+    - response creation
+    """
+
+    start_time = time.perf_counter()
+
+    response = await call_next(request)
+
+    latency = time.perf_counter() - start_time
+
+    logger.info(
+        "Request %s %s completed with status=%s in %.3f seconds.",
+        request.method,
+        request.url.path,
+        response.status_code,
+        latency,
+    )
+
+    return response
