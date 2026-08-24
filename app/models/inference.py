@@ -1,12 +1,12 @@
 import torch
-
+from app.core.config import MAX_NEW_TOKENS
 
 def generate_response(
     instruction: str,
     user_input: str,
     tokenizer,
     model,
-    max_new_tokens: int = 512,
+    max_new_tokens: int | None = None,
 ):
     """
     Generate a response from the fine-tuned Llama model.
@@ -21,7 +21,8 @@ def generate_response(
         - output token count
         - total token count
     """
-
+    if max_new_tokens is None:
+      max_new_tokens = MAX_NEW_TOKENS
     # ---------------------------------------------------------
     # BUILD USER PROMPT
     # ---------------------------------------------------------
