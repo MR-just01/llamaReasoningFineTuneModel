@@ -1,8 +1,11 @@
-# Environment variables / secrets
-.env
-.env.*
-!.env.example
-
-# Python cache
+# Python
 __pycache__/
 *.py[cod]
+
+# Environment
+.env
+.venv/
+venv/
+
+# Generated benchmark/evaluation results
+results/*.csv
