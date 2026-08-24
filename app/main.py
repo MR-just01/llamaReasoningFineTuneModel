@@ -119,6 +119,32 @@ def health_check():
         "status": "healthy",
         "model_loaded": model is not None,
     }
+
+
+@app.get("/ready")
+def readiness_check():
+    """
+    Check whether the application is ready to serve
+    model-generation requests.
+
+    The application can be alive while the model is still
+    loading, so readiness is checked separately from health.
+    """
+
+    if (
+        app.state.generation_service is None
+        or model is None
+        or tokenizer is None
+    ):
+        return {
+            "status": "not_ready",
+            "model_loaded": False,
+        }
+
+    return {
+        "status": "ready",
+        "model_loaded": True,
+    }
 @app.middleware("http")
 async def log_request_latency(request, call_next):
     """
