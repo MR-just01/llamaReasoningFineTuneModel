@@ -1,0 +1,436 @@
+id,category,difficulty,reasoning_type,question,expected_answer,model_response,input_tokens,output_tokens,total_tokens,latency_ms,tokens_per_second,status_code,successful,error
+1,Logic,Easy,Deductive,"If five machines make five toys in five minutes, how long would 100 machines take to make 100 toys? Explain your reasoning.",5 minutes,"Reasoning:
+If five machines make five toys in five minutes, then each machine makes one toy in five minutes.
+If 100 machines are used, then 100 machines will make 100 toys in 5 minutes.
+
+Final Answer:
+5",69,49,118,3983.6362649994044,12.300319793380364,200,True,
+2,Logic,Easy,Deductive,All roses are flowers. Some flowers fade quickly. Can you conclude that all roses fade quickly? Explain.,No,"Reasoning:
+No, you cannot conclude that all roses fade quickly. All roses are flowers, but not all flowers are roses. Some flowers fade quickly, but not all flowers fade quickly.
+
+Final Answer:
+No",63,43,106,3430.5531740001243,12.534421657094082,200,True,
+3,Logic,Easy,Pattern,"Which number comes next: 2, 4, 8, 16, ?",32,"Reasoning:
+The number comes next: 32
+
+Final Answer:
+32",60,16,76,1298.9118389996293,12.318003054250834,200,True,
+4,Logic,Medium,Conditional,"If all A are B and all B are C, are all A C?",Yes,"Reasoning:
+Yes, all A are C. All A are B and all B are C, therefore all A are C.
+
+Final Answer:
+Yes",58,31,89,2480.786605000503,12.496036514190108,200,True,
+5,Logic,Medium,Deductive,John is taller than Mary. Mary is taller than Sam. Who is tallest?,John,"Reasoning:
+John is taller than Mary, so John is taller than Sam.
+John is taller than Sam, so John is the tallest.
+
+Final Answer:
+John",58,33,91,2814.542559000074,11.724818263797706,200,True,
+6,Logic,Medium,Logic,A farmer has 17 sheep and all but 9 die. How many remain?,9,"Reasoning:
+9 sheep remain because 17 - 9 = <<17-9=8>>8
+8 sheep remain because 9 - 1 = <<9-1=8>>8
+
+Final Answer:
+8",59,46,105,3702.531748000183,12.423931280223481,200,True,
+7,Logic,Hard,Knights,A knight always tells the truth and a knave always lies. Alice says 'Bob is a knave.' Bob says 'We are both knights.' Who is the knight?,Alice knight; Bob knave,"Reasoning:
+If Alice is a knight, then Bob is a knave. But if Bob is a knave, then Alice is a knave. So Alice is a knave and Bob is a knight.
+
+Final Answer:
+Bob",77,48,125,3844.5314169994163,12.485266679772145,200,True,
+8,Logic,Hard,Logic,Which weighs more: 1 kg of iron or 1 kg of cotton?,Same weight,"Reasoning:
+1 kg of iron weighs 1 kg, while 1 kg of cotton weighs 0.1 kg. Therefore, 1 kg of iron weighs more than 1 kg of cotton.
+
+Final Answer:
+1",58,46,104,3706.6974439994738,12.409968899529781,200,True,
+9,Logic,Hard,Calendar,"If today is Monday, what day will it be 100 days later?",Wednesday,"Reasoning:
+100 days later, it will be 100/7 = 14 weeks and 2 days later.
+If today is Monday, 14 weeks later it will be Monday again.
+So, 100 days later, it will be Monday + 2 days = Wednesday.
+
+Final Answer:
+Wednesday",57,62,119,4965.713116999723,12.485618588747695,200,True,
+10,Logic,Hard,Reasoning,Three switches control three bulbs in another room. You may enter the room only once. How do you identify each switch?,Heat/light bulb method,"Reasoning:
+Turn on switch 1 for 5 minutes. Turn off switch 1 and turn on switch 2. Turn off switch 2 and turn on switch 3. Now, go to the room and check the bulbs. The bulb that is on is controlled by switch 2. The bulb that is off but warm is controlled by switch 1. The bulb that is off and cold is controlled by switch 3.
+
+Final Answer:
+Switch 2",66,95,161,7681.481917000383,12.367405277587046,200,True,
+11,Mathematics,Easy,Arithmetic,What is 25 × 16?,400,"Reasoning:
+25 × 16 = 25 × (10 + 6)
+= 25 × 10 + 25 × 6
+= 250 + 150
+= 400
+
+Final Answer:
+400",50,46,96,3662.34698199969,12.560251725488717,200,True,
+12,Mathematics,Easy,Arithmetic,Solve: 144 ÷ 12,12,"Reasoning:
+144 ÷ 12 = 12
+
+Final Answer:
+12",51,17,68,1367.7712730004714,12.428978686405078,200,True,
+13,Mathematics,Easy,Percentage,A shirt costs $80 and is discounted by 25%. What is the sale price?,60,"Reasoning:
+The discount is $80 x 25/100 = $<<80*25/100=20>>20.
+So, the sale price is $80 - $20 = $<<80-20=60>>60.
+
+Final Answer:
+60",60,53,113,4291.6819510001005,12.349470581725956,200,True,
+14,Mathematics,Medium,Algebra,Solve: 2x + 5 = 17,6,"Reasoning:
+2x = 17 - 5
+2x = 12
+x = 12/2
+x = 6
+
+Final Answer:
+6",54,35,89,2814.1307280002366,12.437233157562487,200,True,
+15,Mathematics,Medium,Ratio,"Flour:sugar=3:2. If flour is 9 cups, how much sugar?",6 cups,"Reasoning:
+Flour:sugar=3:2
+Flour:sugar=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2=9:2
+Sugar:2",62,256,318,20462.846799000545,12.510478259188437,200,True,
+16,Mathematics,Medium,Sequence,"Find next: 3,6,11,18,27,?",38,"Reasoning:
+3+3=6
+6+5=11
+11+7=18
+18+9=27
+27+11=38
+
+Final Answer:
+38",57,38,95,3025.0579099993047,12.561742991561022,200,True,
+17,Mathematics,Hard,Combinations,How many ways to choose 3 people from 8?,56,"Reasoning:
+The number of ways to choose 3 people from 8 is 8C3 = 8! / (3! * (8-3)!) = 8! / (3! * 5!) = (8 * 7 * 6) / (3 * 2 * 1) = 56.
+
+Final Answer:
+56",54,76,130,6080.490315999668,12.498992030300627,200,True,
+18,Mathematics,Hard,Statistics,"Mean of 4,7,9,10,20",10,"Reasoning:
+Sum of the numbers = 4+7+9+10+20 = 50
+Number of terms = 5
+Mean = Sum/Number of terms = 50/5 = 10
+
+Final Answer:
+10",54,50,104,3988.115819000086,12.53724873329686,200,True,
+19,Mathematics,Hard,Geometry,Area of rectangle 15×8,120,"Explanation:
+Area of rectangle = 15×8 = 120 sq. cm.",49,18,67,1495.228505000341,12.038293772359491,200,True,
+20,Mathematics,Hard,Word Problem,Taxi charges $4 + $2 per mile. Cost for 13 miles.,30,"Reasoning:
+Cost for 13 miles = 13 * 2 = $<<13*2=26>>26
+Total cost = 26 + 4 = $<<26+4=30>>30
+
+Final Answer:
+30",59,49,108,3919.475089000116,12.50167404750625,200,True,
+21,Probability,Easy,Probability,Probability of heads on a fair coin.,2-Jan,"Reasoning:
+Probability of heads on a fair coin = 1/2
+
+Final Answer:
+1/2",50,23,73,1834.482284999467,12.537597221881422,200,True,
+22,Probability,Easy,Probability,Probability of rolling a 6 on a fair die.,6-Jan,"Reasoning:
+Probability of rolling a 6 on a fair die = 1/6
+
+Final Answer:
+1/6",53,26,79,2087.43928199965,12.455452105458825,200,True,
+23,Probability,Easy,Conditional,Two fair coins tossed. Probability of exactly one head.,2-Jan,"Reasoning:
+Two fair coins tossed. Probability of exactly one head.
+P(exactly one head) = 2P(1 head and 1 tail)
+= 2(1/2 x 1/2)
+= 1/2
+Answer: 1/2
+
+Final Answer:
+1/2",53,65,118,5247.73946500045,12.386285644231087,200,True,
+24,Probability,Medium,Probability,"Bag has 3 red,2 blue. Probability of drawing red.",5-Mar,"Reasoning:
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3/5
+3",56,256,312,21069.065247000253,12.150515317068871,200,True,
+25,Probability,Medium,Independence,Probability both dice show 6.,Jan-36,"Reasoning:
+Probability both dice show 6 = 1/6 * 1/6 = 1/36
+
+Final Answer:
+1/36",49,32,81,2633.1004570001824,12.152973470847636,200,True,
+26,Probability,Medium,Expected Value,Expected value of fair die.,3.5,"Reasoning:
+Expected value of fair die = (1 + 2 + 3 + 4 + 5 + 6)/6 = 21/6 = 3.5
+
+Final Answer:
+3.5",48,46,94,4152.491312000166,11.077687234905445,200,True,
+27,Probability,Hard,Bayes,"Medical test: 99% sensitivity,95% specificity,1% prevalence. Does positive imply disease?",No; positive predictive value is much lower,"Reasoning:
+Sensitivity = 99%
+Specificity = 95%
+Prevalence = 1%
+Positive Predictive Value (PPV) = 99/100 * 95/100 * 1/100 = 0.95
+Negative Predictive Value (NPV) = 99/100 * 95/100 * 99/100 = 0.95
+Positive implies disease: 0.95
+
+Final Answer:
+Yes",63,94,157,8389.511320000565,11.20446667446581,200,True,
+28,Probability,Hard,Cards,Probability of drawing an ace from a standard deck.,13-Jan,"Reasoning:
+There are 4 aces in a standard deck of 52 cards.
+Probability of drawing an ace = 4/52 = 1/13
+
+Final Answer:
+1/13",52,41,93,3613.2889199998317,11.347002940468405,200,True,
+29,Probability,Hard,Sampling,"5 green,5 yellow. Draw 2 without replacement. Both green?",9-Feb,"Reasoning:
+P(G) = 5/10
+P(Y) = 5/10
+P(GY) = 5/10*5/9 = 25/90
+P(GG) = 5/10*4/9 = 20/90
+P(GG|GY) = 20/90/25/90 = 4/5
+P(GG|GY) = 4/5
+
+Final Answer:
+4/5",57,99,156,8430.280174000472,11.743381946583742,200,True,
+30,Probability,Hard,Conditional,"Two-child family, at least one boy. Probability both boys.",3-Jan,"Reasoning:
+P(both boys) = P(boy1 and boy2) = P(boy1) * P(boy2) = 1/2 * 1/2 = 1/4
+
+Final Answer:
+1/4",55,52,107,4313.52661999972,12.05510121553472,200,True,
+31,Coding,Easy,Python,"What does len([1,2,3]) return?",3,"Reasoning:
+The len() function returns the number of items in an object. In this case, the object is a list. The list contains three items: 1, 2, and 3. Therefore, len([1,2,3]) returns 3.
+
+Final Answer:
+3",54,61,115,5132.896575999439,11.884128015597614,200,True,
+32,Coding,Easy,Debugging,Fix: for i in range(5): print(i) if expected output is 1 to 5.,"Use range(1,6)","Reasoning:
+The expected output is 1 to 5. The code is using a for loop to iterate over the range of 5. The print statement is used to print the value of i. The if statement is used to check if the value of i is within the range of 1 to 5. If the value of i is within the range, the print statement will be executed.
+
+Final Answer:
+for i in range(5): print(i)",64,95,159,7876.085066999622,12.061830108723045,200,True,
+33,Coding,Easy,Complexity,Time complexity of binary search.,O(log n),"Reasoning:
+Binary search is an efficient algorithm for finding an item from a sorted list of items. It works by repeatedly dividing in half the portion of the list that could contain the item, until you've narrowed down the possible locations to just one. The time complexity of binary search is O(log n), where n is the number of items in the list. This is because each comparison reduces the size of the list by half, resulting in a logarithmic number of comparisons.",48,96,144,8026.450651000232,11.960454773124004,200,True,
+34,Coding,Medium,Python,Output of print(2**3),8,"Reasoning:
+Output of print(2**3) = 8
+
+Final Answer:
+8",50,20,70,2168.83602300004,9.221536247048785,200,True,
+35,Coding,Medium,Data Structures,Which data structure is FIFO?,Queue,"Reasoning:
+A stack is a data structure that follows the FIFO (First In, First Out) principle. When you add an element to the top of the stack, it is the first element to be removed when you remove an element from the stack.
+
+Final Answer:
+Stack",48,56,104,4763.414221999483,11.75627341862651,200,True,
+36,Coding,Medium,Sorting,Name one O(n log n) average sorting algorithm.,Merge sort / Heap sort / Quicksort,"Reasoning:
+One O(n log n) average sorting algorithm is Merge Sort.
+
+Final Answer:
+Merge Sort",53,22,75,1876.8470539998816,11.721786254833201,200,True,
+37,Coding,Hard,Recursion,What is the base case in recursion?,Stopping condition,"Reasoning:
+The base case in recursion is the case that is not recursive. It is the case that can be solved directly without calling the function again. It is the case that stops the recursion.
+
+Final Answer:
+Base case",50,46,96,4019.977947999905,11.442848840224803,200,True,
+38,Coding,Hard,Trees,Which traversal uses a queue?,Breadth-First Search,"Reasoning:
+The traversal that uses a queue is the In-Order traversal.
+
+Final Answer:
+In-Order traversal",48,24,72,2090.6838629998674,11.479497414574688,200,True,
+39,Coding,Hard,Complexity,Time complexity of linear search.,O(n),"Reasoning:
+The time complexity of linear search is O(n).",48,14,62,1257.9597129997637,11.129132241139292,200,True,
+40,Coding,Hard,Debugging,Why can a while loop become infinite?,Condition never becomes false,"Reasoning:
+A while loop can become infinite if the condition is not met. For example, if the condition is a = b and a and b are not equal, the loop will continue indefinitely.
+
+Final Answer:
+Infinite.",50,47,97,4071.57615899996,11.543441204239663,200,True,
+41,Planning,Easy,Scheduling,Create a 4-hour study schedule with 10-minute breaks.,Reasonable schedule,"Reasoning:
+The study schedule will have 4 hours * 60 minutes/hour = <<4*60=240>>240 minutes.
+The study schedule will have 240 minutes / 10 minutes break = <<240/10=24>>24 breaks.
+The study schedule will have 24 breaks + 1 start break = <<24+1=25>>25 breaks.
+The study schedule will have 25 breaks * 10 minutes/break = <<25*10=250>>250 minutes of breaks.
+The study schedule will have 250 minutes of breaks + 240 minutes of study = <<250+240=490>>490 minutes.
+The study schedule will have 490 minutes / 60 minutes/hour = <<490/60=8.17>>8.17 hours.
+The study schedule will have 8.17 hours of study + 25 breaks * 10 minutes/break = <<8.17+25*10=8.17+250>>8.17 hours + 250 minutes of breaks.
+The study schedule will have 8.17 hours of study + 250 minutes of breaks = 8.17 hours + 4 hours = <<8.17+4=12.17>>12.17 hours.
+
+Final Answer:",55,256,311,22275.828574000116,11.49227734221289,200,True,
+42,Planning,Easy,Prioritization,"Urgent assignment, exam tomorrow, laundry. What first?",Prioritize urgent/high-impact work,"Reasoning:
+First, laundry.",55,8,63,713.3770649998041,11.21426576841547,200,True,
+43,Planning,Easy,Time Management,2 hours to study 5 chapters. Suggest strategy.,Time-block with prioritization,"Reasoning:
+Study 1 chapter in 1 hour.
+Study 2 chapters in 1 hour.
+Study 3 chapters in 1 hour.
+Study 4 chapters in 1 hour.
+Study 5 chapters in 1 hour.
+
+Final Answer:
+1 hour",54,54,108,4805.862529000478,11.236276459041974,200,True,
+44,Planning,Medium,Resource Allocation,"Plan a weekend for project, exercise, family.",Balanced plan,"Reasoning:
+Plan a weekend with a mix of activities. Start the weekend with a project. Spend the morning working on a project. Take a break for lunch. Spend the afternoon working on a project. Take a break for dinner. Spend the evening working on a project. Exercise is a great way to relieve stress. Spend the morning exercising. Take a break for lunch. Spend the afternoon exercising. Take a break for dinner. Spend the evening exercising. Family time is important. Spend the morning with family. Take a break for lunch. Spend the afternoon with family. Take a break for dinner. Spend the evening with family.
+
+Final Answer:
+Plan a weekend with a mix of activities. Start the weekend with a project. Spend the morning working on a project. Take a break for lunch. Spend the afternoon working on a project. Take a break for dinner. Spend the evening working on a project. Exercise is a great way to relieve stress. Spend the morning exercising. Take a break for lunch. Spend the afternoon exercising. Take a break for dinner. Spend the evening exercising. Family time is important. Spend the morning with family. Take a break for lunch. Spend the afternoon with family. Take a break for dinner. Spend the evening with family.",52,253,305,22649.298463999912,11.17032390217881,200,True,
+45,Planning,Medium,Decision Making,Budget $500 for laptop upgrade. What factors matter?,"Needs, performance, value","Reasoning:
+The factors that matter are the price of the laptop, the condition of the laptop, the brand of the laptop, the model of the laptop, the operating system of the laptop, the amount of storage the laptop has, the amount of memory the laptop has, the battery life of the laptop, the weight of the laptop, the size of the laptop, the color of the laptop, the warranty of the laptop, the brand reputation of the laptop, the model reputation of the laptop, the operating system reputation of the laptop, the storage reputation of the laptop, the memory reputation of the laptop, the battery life reputation of the laptop, the weight reputation of the laptop, the size reputation of the laptop, the color reputation of the laptop, the warranty reputation of the laptop, the brand reputation of the laptop, the model reputation of the laptop, the operating system reputation of the laptop, the storage reputation of the laptop, the memory reputation of the laptop, the battery life reputation of the laptop, the weight reputation of the laptop, the size reputation of the laptop, the color reputation of the laptop, the warranty reputation of the laptop, the brand reputation of the laptop, the model reputation of the laptop, the operating system reputation of the laptop, the storage reputation of",53,256,309,23159.503115000007,11.053777739911581,200,True,
+46,Planning,Medium,Project Planning,Outline a one-week Python web app plan.,Requirements→development→testing,"Reasoning:
+Here is a one-week plan for a Python web app:
+Day 1: Planning and Design
+* Define the app's purpose and target audience
+* Research existing web apps and identify features to include
+* Create a wireframe of the app's layout and user interface
+* Plan the app's database and data storage
+Day 2: Setting up the Environment
+* Install Python and necessary libraries (e.g. Flask, Django)
+* Set up a virtual environment for the app
+* Create a new project directory and initialize a Git repository
+Day 3: Building the App's Core Features
+* Create a new file for the app's main route (e.g. index.html)
+* Write code to handle user input and display data
+* Implement basic user authentication (e.g. login, logout)
+Day 4: Building the App's User Interface
+* Create a new file for the app's user interface (e.g. templates/index.html)
+* Write code to handle user interactions and update the UI
+* Implement responsive design for mobile devices
+Day 5: Building the App's Database and Data Storage
+* Create a new file for the app's database (e.g. models.py)
+* Write code to interact with the database and store",51,256,307,22747.788531999504,11.253841209218324,200,True,
+47,Planning,Hard,Constraint Satisfaction,Schedule five meetings with one-hour lunch and no overlaps.,Conflict-free schedule,"Reasoning:
+The total time for the five meetings is 5*1=<<5*1=5>>5 hours.
+The total time for the five meetings with one-hour lunch is 5*1+5*1=<<5*1+5*1=10>>10 hours.
+The total time for the five meetings with one-hour lunch and no overlaps is 10/2=<<10/2=5>>5 hours.
+
+Final Answer:
+5",53,96,149,8617.54073100019,11.140069191046088,200,True,
+48,Planning,Hard,Optimization,Choose shortest route across four locations and justify.,Travel-minimizing plan,"Reasoning:
+A to B to C to D to A
+A to B to D to C to A
+A to C to B to D to A
+A to C to D to B to A
+A to D to B to C to A
+A to D to C to B to A
+A to D to C to A to B
+A to D to B to C to A
+A to D to B to A to C
+A to D to B to C to A
+A to D to C to B to A
+A to D to C to A to B
+A to D to C to B to A
+A to D to B to C to A
+A to D to B to A to C
+A to D to B to C to A
+A to D to C to B to A
+A to D to C to A to B
+A to D to C to B to A
+A to D to B to C to A
+A to D to B to A to C
+A to D to B to C to A
+A to D to C to B to A
+A to D to C to A to B
+A to D to C to B to A
+A to D",51,256,307,22785.773206999693,11.235080665217799,200,True,
+49,Planning,Hard,Learning Plan,Create a 30-day ML learning roadmap.,Weekly milestones,"Reasoning:
+Here is a 30-day ML learning roadmap:
+
+Day 1-5: Introduction to Machine Learning
+- Day 1: Introduction to Machine Learning
+- Day 2: Types of Machine Learning
+- Day 3: Machine Learning Applications
+- Day 4: Machine Learning Tools
+- Day 5: Machine Learning Resources
+
+Day 6-10: Supervised Learning
+- Day 6: Supervised Learning Basics
+- Day 7: Supervised Learning Algorithms
+- Day 8: Supervised Learning Applications
+- Day 9: Supervised Learning Tools
+- Day 10: Supervised Learning Resources
+
+Day 11-15: Unsupervised Learning
+- Day 11: Unsupervised Learning Basics
+- Day 12: Unsupervised Learning Algorithms
+- Day 13: Unsupervised Learning Applications
+- Day 14: Unsupervised Learning Tools
+- Day 15: Unsupervised Learning Resources
+
+Day 16-20: Deep Learning
+- Day 16: Deep Learning Basics
+- Day 17: Deep Learning Algorithms
+- Day 18: Deep Learning Applications
+- Day 19: Deep Learning Tools
+- Day 20: Deep Learning Resources
+
+Day 21-25",51,256,307,23084.246612999777,11.089813945057877,200,True,
+50,Planning,Hard,Risk Analysis,Three software project risks and mitigations.,Valid risks with mitigations,"Reasoning:
+The first software project risk is the risk of not meeting the project deadline. The mitigation for this risk is to create a detailed project schedule and to regularly review the project status to ensure that the project is on track to meet the deadline. The second software project risk is the risk of not meeting the project budget. The mitigation for this risk is to create a detailed project budget and to regularly review the project status to ensure that the project is on track to meet the budget. The third software project risk is the risk of not meeting the project quality requirements. The mitigation for this risk is to create a detailed project quality plan and to regularly review the project status to ensure that the project is on track to meet the quality requirements.
+
+Final Answer:
+The first software project risk is the risk of not meeting the project deadline. The mitigation for this risk is to create a detailed project schedule and to regularly review the project status to ensure that the project is on track to meet the deadline. The second software project risk is the risk of not meeting the project budget. The mitigation for this risk is to create a detailed project budget and to regularly review the project status to ensure that the project is on track to meet the budget. The third software project risk is the risk of not meeting the",50,256,306,23422.159920000013,10.929820344254564,200,True,
