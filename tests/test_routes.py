@@ -1,3 +1,5 @@
+%%writefile tests/test_routes.py
+
 import app.main as main_module
 
 from fastapi.testclient import TestClient
@@ -27,14 +29,7 @@ class FakeGenerationService:
         )
 
 
-# =========================================================
-# HEALTH ENDPOINT
-# =========================================================
-
 def test_health_endpoint(monkeypatch):
-    """
-    Verify that /health reports the model as loaded.
-    """
 
     monkeypatch.setattr(
         main_module,
@@ -60,15 +55,7 @@ def test_health_endpoint(monkeypatch):
     assert data["model_loaded"] is True
 
 
-# =========================================================
-# READY ENDPOINT — MODEL LOADED
-# =========================================================
-
 def test_ready_endpoint(monkeypatch):
-    """
-    Verify that /ready reports the application as ready
-    when model components and generation service exist.
-    """
 
     monkeypatch.setattr(
         main_module,
@@ -103,15 +90,7 @@ def test_ready_endpoint(monkeypatch):
     assert data["model_loaded"] is True
 
 
-# =========================================================
-# READY ENDPOINT — MODEL NOT LOADED
-# =========================================================
-
 def test_ready_endpoint_when_model_not_loaded(monkeypatch):
-    """
-    Verify that /ready reports not_ready when the model
-    or generation service is unavailable.
-    """
 
     monkeypatch.setattr(
         main_module,
@@ -144,15 +123,7 @@ def test_ready_endpoint_when_model_not_loaded(monkeypatch):
     assert data["model_loaded"] is False
 
 
-# =========================================================
-# GENERATE ENDPOINT
-# =========================================================
-
 def test_generate_endpoint(monkeypatch):
-    """
-    Verify that /generate accepts a valid request and
-    returns the expected response structure.
-    """
 
     fake_service = FakeGenerationService()
 
@@ -190,14 +161,7 @@ def test_generate_endpoint(monkeypatch):
     assert data["total_tokens"] == 65
 
 
-# =========================================================
-# INVALID GENERATE REQUEST
-# =========================================================
-
 def test_generate_empty_instruction():
-    """
-    Verify that /generate rejects an empty instruction.
-    """
 
     client = TestClient(app)
 
