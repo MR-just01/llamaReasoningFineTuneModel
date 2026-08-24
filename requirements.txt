@@ -1,23 +1,12 @@
-# Core ML runtime
-torch==2.10.0
+fastapi==0.136.1
+uvicorn==0.46.0
+pydantic==2.12.3
 
-# Hugging Face model and tokenizer
-transformers==5.15.1
-
-# GPU/device management
-accelerate==1.14.0
-
-# LoRA adapter support
+torch==2.10.0+cu128
+transformers==5.1.1
 peft==0.20.0
+accelerate==1.14.0
+safetensors==0.8.0
+huggingface-hub==1.11.0
 
-# PyTorch optimization compatibility
-torchao==0.16.0
-
-# Hugging Face model access
-huggingface_hub==1.11.0
-
-python-dotenv==1.1.1
-
-fastapi
-uvicorn
-pydantic
+requests==2.32.4
