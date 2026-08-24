@@ -93,13 +93,18 @@ class GenerationService:
             #
             # Call the actual inference logic from inference.py.
             #
-            response = generate_response(
+            result = generate_response(
                 instruction=request.instruction,
-                user_input=request.input,
-                tokenizer=self.tokenizer,
-                model=self.model,
-                max_new_tokens=request.max_new_tokens,
-            )
+                 user_input=request.input,
+                 tokenizer=self.tokenizer,
+                 model=self.model,
+                  max_new_tokens=request.max_new_tokens,
+)
+
+            response = result["response"]
+            input_tokens = result["input_tokens"]
+            output_tokens = result["output_tokens"]
+            total_tokens = result["total_tokens"]
             latency = time.perf_counter() - start_time
 
             logger.info(
@@ -136,5 +141,8 @@ class GenerationService:
         # GenerationResponse schema.
         #
         return GenerationResponse(
-            response=response
-        )
+    response=response,
+    input_tokens=input_tokens,
+    output_tokens=output_tokens,
+    total_tokens=total_tokens,
+)

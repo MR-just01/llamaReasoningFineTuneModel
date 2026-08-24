@@ -29,6 +29,20 @@ class GenerationRequest(BaseModel):
 class GenerationResponse(BaseModel):
     """
     Output returned by the model inference API.
+
+    Besides the generated response, this schema also
+    exposes token usage information for monitoring
+    and performance analysis.
     """
 
+    # Generated text returned by the model.
     response: str
+
+    # Number of tokens in the generated output.
+    output_tokens: int
+
+    # Number of input/prompt tokens.
+    input_tokens: int
+
+    # Total tokens processed.
+    total_tokens: int
