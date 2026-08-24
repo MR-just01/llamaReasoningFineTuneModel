@@ -41,7 +41,8 @@ API_URL = (
 #
 # NUM_ROWS = 166
 #
-NUM_ROWS = 5
+NUM_ROWS = 100
+RANDOM_SEED = 42
 
 
 # ---------------------------------------------------------
@@ -110,7 +111,14 @@ if NUM_ROWS > len(golden_df):
 # Select rows for this evaluation run.
 # ---------------------------------------------------------
 
-evaluation_df = (golden_df.head(NUM_ROWS).copy())
+evaluation_df = (
+    golden_df
+    .sample(
+        n=NUM_ROWS,
+        random_state=RANDOM_SEED,
+    )
+    .copy()
+)
 
 
 print(
@@ -201,7 +209,8 @@ for position, (_, row) in enumerate(
     input_tokens = 0
 
     output_tokens = 0
-
+    generation_truncated = False
+ 
     total_tokens = 0
 
     tokens_per_second = 0.0
@@ -293,6 +302,9 @@ for position, (_, row) in enumerate(
                 )
             )
 
+           # If the model generates exactly MAX_NEW_TOKENS,
+             # it may have reached the generation limit.
+            generation_truncated = (output_tokens >= MAX_NEW_TOKENS)
 
             total_tokens = (
                 response_json.get(
@@ -422,6 +434,8 @@ for position, (_, row) in enumerate(
             "input_tokens": input_tokens,
 
             "output_tokens": output_tokens,
+            
+            "generation_truncated": generation_truncated,
 
             "total_tokens": total_tokens,
 
