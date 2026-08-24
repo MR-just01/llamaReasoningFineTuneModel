@@ -13,9 +13,9 @@ DATASET_PATH = "data/reasoning_questions.csv"
 # FastAPI endpoint that serves our fine-tuned model.
 API_URL = "http://127.0.0.1:8000/generate"
 
-# Start with 5 rows while testing.
+# Start with 50 rows while testing.
 # Once everything works, change this to 50.
-NUM_ROWS = 5
+NUM_ROWS = 50
 
 # Maximum time allowed for one API request.
 REQUEST_TIMEOUT = 120
