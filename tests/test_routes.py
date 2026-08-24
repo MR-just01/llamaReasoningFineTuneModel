@@ -36,7 +36,6 @@ def test_health_endpoint(monkeypatch):
     Verify that /health reports the model as loaded.
     """
 
-    # Simulate the state that exists after application startup.
     monkeypatch.setattr(
         main_module,
         "model",
@@ -62,7 +61,7 @@ def test_health_endpoint(monkeypatch):
 
 
 # =========================================================
-# READY ENDPOINT
+# READY ENDPOINT — MODEL LOADED
 # =========================================================
 
 def test_ready_endpoint(monkeypatch):
@@ -71,7 +70,6 @@ def test_ready_endpoint(monkeypatch):
     when model components and generation service exist.
     """
 
-    # Fake loaded model.
     monkeypatch.setattr(
         main_module,
         "model",
@@ -84,7 +82,6 @@ def test_ready_endpoint(monkeypatch):
         "fake_tokenizer",
     )
 
-    # Fake generation service.
     fake_service = FakeGenerationService()
 
     monkeypatch.setattr(
@@ -104,6 +101,47 @@ def test_ready_endpoint(monkeypatch):
 
     assert data["status"] == "ready"
     assert data["model_loaded"] is True
+
+
+# =========================================================
+# READY ENDPOINT — MODEL NOT LOADED
+# =========================================================
+
+def test_ready_endpoint_when_model_not_loaded(monkeypatch):
+    """
+    Verify that /ready reports not_ready when the model
+    or generation service is unavailable.
+    """
+
+    monkeypatch.setattr(
+        main_module,
+        "model",
+        None,
+    )
+
+    monkeypatch.setattr(
+        main_module,
+        "tokenizer",
+        None,
+    )
+
+    monkeypatch.setattr(
+        app.state,
+        "generation_service",
+        None,
+        raising=False,
+    )
+
+    client = TestClient(app)
+
+    response = client.get("/ready")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["status"] == "not_ready"
+    assert data["model_loaded"] is False
 
 
 # =========================================================
