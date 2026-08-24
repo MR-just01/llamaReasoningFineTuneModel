@@ -13,11 +13,8 @@ DATASET_PATH = "data/reasoning_questions.csv"
 # FastAPI endpoint that serves our fine-tuned model.
 API_URL = "http://127.0.0.1:8000/generate"
 
-# ---------------------------------------------------------
-# IMPORTANT:
-# Start with 5 rows while testing the benchmark.
+# Start with 5 rows while testing.
 # Once everything works, change this to 50.
-# ---------------------------------------------------------
 NUM_ROWS = 5
 
 # Maximum time allowed for one API request.
@@ -52,10 +49,7 @@ if "question" not in df.columns:
     )
 
 
-# ---------------------------------------------------------
-# Select rows for the benchmark.
-# ---------------------------------------------------------
-
+# Select the rows for the benchmark.
 benchmark_df = df.head(NUM_ROWS).copy()
 
 print(
@@ -88,11 +82,9 @@ for position, (_, row) in enumerate(
     print(f"Question ID: {question_id}")
 
     # -----------------------------------------------------
-    # Build request payload.
+    # BUILD API REQUEST
     # -----------------------------------------------------
-    #
-    # The question comes directly from the dataset.
-    #
+
     payload = {
         "instruction": (
             "Solve the following reasoning problem."
@@ -101,9 +93,21 @@ for position, (_, row) in enumerate(
         "max_new_tokens": MAX_NEW_TOKENS,
     }
 
-    # Default values in case the request fails.
+    # -----------------------------------------------------
+    # DEFAULT VALUES
+    # -----------------------------------------------------
+    #
+    # These values are used if the request fails.
+    #
+
     status_code = None
     model_response = ""
+
+    input_tokens = 0
+    output_tokens = 0
+    total_tokens = 0
+    tokens_per_second = 0.0
+
     error_message = ""
     successful = False
 
@@ -125,17 +129,17 @@ for position, (_, row) in enumerate(
     #      ↓
     # Python client
     #
+
     start_time = time.perf_counter()
 
     try:
-
         response = requests.post(
             API_URL,
             json=payload,
             timeout=REQUEST_TIMEOUT,
         )
 
-        # Stop the timer immediately after receiving
+        # Stop timer immediately after receiving
         # the HTTP response.
         end_time = time.perf_counter()
 
@@ -145,23 +149,60 @@ for position, (_, row) in enumerate(
 
         status_code = response.status_code
 
-        # -------------------------------------------------
         # SUCCESSFUL REQUEST
-        # -------------------------------------------------
-
         if response.status_code == 200:
-
             successful = True
-
             response_json = response.json()
+            # Generated model response.
+            model_response = response_json.get("response","",)
+            # Token usage returned by the API.
+            input_tokens = response_json.get("input_tokens",0, )
+            output_tokens = response_json.get(  "output_tokens", 0, )
+            total_tokens = response_json.get( "total_tokens",0,  )
 
-            model_response = response_json.get(
-                "response",
-                "",
+            # -------------------------------------------------
+            # CALCULATE OUTPUT TOKENS / SECOND
+            # -------------------------------------------------
+            #
+            # This measures how many generated output tokens
+            # were produced per second from the API client's
+            # perspective.
+            #
+
+            if output_tokens > 0 and latency_ms > 0:
+
+                tokens_per_second = (
+                    output_tokens
+                    / (latency_ms / 1000)
+                )
+
+            else:
+
+                tokens_per_second = 0.0
+
+            print(
+                f"Latency: "
+                f"{latency_ms:.2f} ms"
             )
 
             print(
-                f"Latency: {latency_ms:.2f} ms"
+                f"Input tokens: "
+                f"{input_tokens}"
+            )
+
+            print(
+                f"Output tokens: "
+                f"{output_tokens}"
+            )
+
+            print(
+                f"Total tokens: "
+                f"{total_tokens}"
+            )
+
+            print(
+                f"Tokens/sec: "
+                f"{tokens_per_second:.2f}"
             )
 
             print("Status: 200 OK")
@@ -180,7 +221,7 @@ for position, (_, row) in enumerate(
             )
 
     # -----------------------------------------------------
-    # REQUEST / CONNECTION / TIMEOUT ERROR
+    # CONNECTION / TIMEOUT ERROR
     # -----------------------------------------------------
 
     except requests.RequestException as exc:
@@ -194,7 +235,8 @@ for position, (_, row) in enumerate(
         error_message = str(exc)
 
         print(
-            f"Request failed: {error_message}"
+            f"Request failed: "
+            f"{error_message}"
         )
 
     # =====================================================
@@ -203,35 +245,66 @@ for position, (_, row) in enumerate(
 
     results.append(
         {
-            # Dataset information
+            # -------------------------------------------------
+            # DATASET INFORMATION
+            # -------------------------------------------------
+
             "id": question_id,
+
             "category": row.get(
                 "category",
                 "",
             ),
+
             "difficulty": row.get(
                 "difficulty",
                 "",
             ),
+
             "reasoning_type": row.get(
                 "reasoning_type",
                 "",
             ),
+
             "question": question,
+
             "expected_answer": row.get(
                 "expected_answer",
                 "",
             ),
 
-            # Model/API output
+            # -------------------------------------------------
+            # MODEL OUTPUT
+            # -------------------------------------------------
+
             "model_response": model_response,
 
-            # Performance information
+            # -------------------------------------------------
+            # TOKEN METRICS
+            # -------------------------------------------------
+
+            "input_tokens": input_tokens,
+
+            "output_tokens": output_tokens,
+
+            "total_tokens": total_tokens,
+
+            # -------------------------------------------------
+            # PERFORMANCE METRICS
+            # -------------------------------------------------
+
             "latency_ms": latency_ms,
+
+            "tokens_per_second": tokens_per_second,
+
+            # -------------------------------------------------
+            # REQUEST STATUS
+            # -------------------------------------------------
+
             "status_code": status_code,
+
             "successful": successful,
 
-            # Error information
             "error": error_message,
         }
     )
@@ -264,16 +337,33 @@ print(
 # CALCULATE LATENCY METRICS
 # =========================================================
 
-successful_latencies = results_df.loc[
-    results_df["successful"],
-    "latency_ms",
+successful_results = results_df[
+    results_df["successful"]
 ]
 
 
-if len(successful_latencies) > 0:
+if len(successful_results) > 0:
 
     # -----------------------------------------------------
-    # Calculate overall API latency statistics.
+    # LATENCY SERIES
+    # -----------------------------------------------------
+
+    successful_latencies = (
+        successful_results["latency_ms"]
+    )
+
+    # -----------------------------------------------------
+    # TOKEN/S SECOND SERIES
+    # -----------------------------------------------------
+
+    successful_throughput = (
+        successful_results[
+            "tokens_per_second"
+        ]
+    )
+
+    # -----------------------------------------------------
+    # LATENCY STATISTICS
     # -----------------------------------------------------
 
     mean_latency = (
@@ -300,6 +390,36 @@ if len(successful_latencies) > 0:
         successful_latencies.max()
     )
 
+    # -----------------------------------------------------
+    # TOKEN STATISTICS
+    # -----------------------------------------------------
+
+    mean_input_tokens = (
+        successful_results[
+            "input_tokens"
+        ].mean()
+    )
+
+    mean_output_tokens = (
+        successful_results[
+            "output_tokens"
+        ].mean()
+    )
+
+    mean_total_tokens = (
+        successful_results[
+            "total_tokens"
+        ].mean()
+    )
+
+    mean_tokens_per_second = (
+        successful_throughput.mean()
+    )
+
+    # -----------------------------------------------------
+    # REQUEST STATISTICS
+    # -----------------------------------------------------
+
     successful_count = (
         results_df["successful"].sum()
     )
@@ -319,7 +439,7 @@ if len(successful_latencies) > 0:
     ) * 100
 
     # -----------------------------------------------------
-    # Print final benchmark report.
+    # PRINT FINAL BENCHMARK REPORT
     # -----------------------------------------------------
 
     print()
@@ -328,55 +448,82 @@ if len(successful_latencies) > 0:
     print("=" * 60)
 
     print(
-        f"Total requests:     {len(results_df)}"
+        f"Total requests:       "
+        f"{len(results_df)}"
     )
 
     print(
-        f"Successful:         {successful_count}"
+        f"Successful:           "
+        f"{successful_count}"
     )
 
     print(
-        f"Failed:             {failed_count}"
+        f"Failed:               "
+        f"{failed_count}"
     )
 
     print(
-        f"Success rate:       {success_rate:.2f}%"
+        f"Success rate:         "
+        f"{success_rate:.2f}%"
     )
 
     print(
-        f"Error rate:         {error_rate:.2f}%"
+        f"Error rate:           "
+        f"{error_rate:.2f}%"
     )
 
     print()
 
     print(
-        f"Mean latency:       "
+        f"Mean latency:         "
         f"{mean_latency:.2f} ms"
     )
 
     print(
-        f"P50 latency:        "
+        f"P50 latency:          "
         f"{p50_latency:.2f} ms"
     )
 
     print(
-        f"P95 latency:        "
+        f"P95 latency:          "
         f"{p95_latency:.2f} ms"
     )
 
     print(
-        f"P99 latency:        "
+        f"P99 latency:          "
         f"{p99_latency:.2f} ms"
     )
 
     print(
-        f"Min latency:        "
+        f"Min latency:          "
         f"{min_latency:.2f} ms"
     )
 
     print(
-        f"Max latency:        "
+        f"Max latency:          "
         f"{max_latency:.2f} ms"
+    )
+
+    print()
+
+    print(
+        f"Mean input tokens:    "
+        f"{mean_input_tokens:.2f}"
+    )
+
+    print(
+        f"Mean output tokens:   "
+        f"{mean_output_tokens:.2f}"
+    )
+
+    print(
+        f"Mean total tokens:    "
+        f"{mean_total_tokens:.2f}"
+    )
+
+    print(
+        f"Mean tokens/sec:      "
+        f"{mean_tokens_per_second:.2f}"
     )
 
     print("=" * 60)
@@ -386,5 +533,5 @@ else:
 
     print()
     print(
-        "No successful requests were recorded."
+        "No successful API requests were recorded."
     )
