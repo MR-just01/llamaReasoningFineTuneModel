@@ -126,13 +126,16 @@ def readiness_check():
     """
     Check whether the application is ready to serve
     model-generation requests.
-
-    The application can be alive while the model is still
-    loading, so readiness is checked separately from health.
     """
 
+    generation_service = getattr(
+        app.state,
+        "generation_service",
+        None,
+    )
+
     if (
-        app.state.generation_service is None
+        generation_service is None
         or model is None
         or tokenizer is None
     ):
@@ -145,6 +148,8 @@ def readiness_check():
         "status": "ready",
         "model_loaded": True,
     }
+
+  
 @app.middleware("http")
 async def log_request_latency(request, call_next):
     """

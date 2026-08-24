@@ -1,3 +1,5 @@
+import app.main as main_module
+
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -8,7 +10,7 @@ class FakeGenerationService:
     """
     Fake generation service used for API tests.
 
-    This avoids loading the real Llama model.
+    The real Llama model is not loaded.
     """
 
     def generate(self, request):
@@ -29,10 +31,23 @@ class FakeGenerationService:
 # HEALTH ENDPOINT
 # =========================================================
 
-def test_health_endpoint():
+def test_health_endpoint(monkeypatch):
     """
-    Verify that /health returns a healthy response.
+    Verify that /health reports the model as loaded.
     """
+
+    # Simulate the state that exists after application startup.
+    monkeypatch.setattr(
+        main_module,
+        "model",
+        "fake_model",
+    )
+
+    monkeypatch.setattr(
+        main_module,
+        "tokenizer",
+        "fake_tokenizer",
+    )
 
     client = TestClient(app)
 
@@ -50,11 +65,34 @@ def test_health_endpoint():
 # READY ENDPOINT
 # =========================================================
 
-def test_ready_endpoint():
+def test_ready_endpoint(monkeypatch):
     """
     Verify that /ready reports the application as ready
-    when the model is loaded.
+    when model components and generation service exist.
     """
+
+    # Fake loaded model.
+    monkeypatch.setattr(
+        main_module,
+        "model",
+        "fake_model",
+    )
+
+    monkeypatch.setattr(
+        main_module,
+        "tokenizer",
+        "fake_tokenizer",
+    )
+
+    # Fake generation service.
+    fake_service = FakeGenerationService()
+
+    monkeypatch.setattr(
+        app.state,
+        "generation_service",
+        fake_service,
+        raising=False,
+    )
 
     client = TestClient(app)
 
@@ -80,8 +118,12 @@ def test_generate_endpoint(monkeypatch):
 
     fake_service = FakeGenerationService()
 
-    # Replace the real generation service with the fake one.
-    app.state.generation_service = fake_service
+    monkeypatch.setattr(
+        app.state,
+        "generation_service",
+        fake_service,
+        raising=False,
+    )
 
     client = TestClient(app)
 
