@@ -8,7 +8,7 @@ import requests
 # =========================================================
 
 # Path to the evaluation dataset.
-DATASET_PATH = "data/reasoning_questions.csv"
+DATASET_PATH = "data/reasoning_dataset.csv"
 
 # FastAPI generation endpoint.
 API_URL = "http://127.0.0.1:8000/generate"
