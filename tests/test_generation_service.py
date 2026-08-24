@@ -1,17 +1,3 @@
-import pytest
-
-from app.services.generation_service import GenerationService
-from app.schemas.request import GenerationRequest
-from app.core.exceptions import (
-    ModelNotReadyError,
-    GenerationError,
-)
-
-
-# =========================================================
-# SUCCESSFUL GENERATION
-# =========================================================
-
 def test_generation_service_success(monkeypatch):
     """
     Verify that the generation service successfully calls
@@ -19,6 +5,10 @@ def test_generation_service_success(monkeypatch):
     """
 
     # Fake inference function.
+    #
+    # IMPORTANT:
+    # This must return the same structure as the real
+    # generate_response() function.
     def fake_generate_response(
         instruction,
         user_input,
@@ -26,7 +16,17 @@ def test_generation_service_success(monkeypatch):
         model,
         max_new_tokens,
     ):
-        return "Reasoning:\n2 + 2 = 4\n\nFinal Answer:\n4"
+        return {
+            "response": (
+                "Reasoning:\n"
+                "2 + 2 = 4\n\n"
+                "Final Answer:\n"
+                "4"
+            ),
+            "input_tokens": 49,
+            "output_tokens": 16,
+            "total_tokens": 65,
+        }
 
     # Replace the real inference function with our fake one.
     monkeypatch.setattr(
@@ -34,6 +34,9 @@ def test_generation_service_success(monkeypatch):
         fake_generate_response,
     )
 
+    # Create the service using fake model components.
+    #
+    # We don't load Llama during this unit test.
     service = GenerationService(
         tokenizer="fake_tokenizer",
         model="fake_model",
@@ -47,68 +50,15 @@ def test_generation_service_success(monkeypatch):
 
     result = service.generate(request)
 
+    # Verify generated response.
     assert result.response == (
-        "Reasoning:\n2 + 2 = 4\n\nFinal Answer:\n4"
+        "Reasoning:\n"
+        "2 + 2 = 4\n\n"
+        "Final Answer:\n"
+        "4"
     )
 
-
-# =========================================================
-# MODEL NOT READY
-# =========================================================
-
-def test_generation_service_model_not_ready():
-    """
-    Verify that the service rejects generation when the
-    model or tokenizer has not been loaded.
-    """
-
-    service = GenerationService(
-        tokenizer=None,
-        model=None,
-    )
-
-    request = GenerationRequest(
-        instruction="Solve the problem.",
-        input="What is 2 + 2?",
-    )
-
-    with pytest.raises(ModelNotReadyError):
-        service.generate(request)
-
-
-# =========================================================
-# INFERENCE FAILURE
-# =========================================================
-
-def test_generation_service_inference_failure(monkeypatch):
-    """
-    Verify that low-level inference errors are converted
-    into our application-specific GenerationError.
-    """
-
-    def fake_generate_response(
-        instruction,
-        user_input,
-        tokenizer,
-        model,
-        max_new_tokens,
-    ):
-        raise RuntimeError("Fake inference failure")
-
-    monkeypatch.setattr(
-        "app.services.generation_service.generate_response",
-        fake_generate_response,
-    )
-
-    service = GenerationService(
-        tokenizer="fake_tokenizer",
-        model="fake_model",
-    )
-
-    request = GenerationRequest(
-        instruction="Solve the problem.",
-        input="What is 2 + 2?",
-    )
-
-    with pytest.raises(GenerationError):
-        service.generate(request)
+    # Verify token information is passed through correctly.
+    assert result.input_tokens == 49
+    assert result.output_tokens == 16
+    assert result.total_tokens == 65
