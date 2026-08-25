@@ -3,11 +3,15 @@ import os
 from dotenv import load_dotenv
 
 
-# Loading variables from .env when running locally.
-# In environments such as Kaggle, variables can also
-# be supplied directly by the environment/secrets system.
+# Load variables from .env when running locally.
+# In production, environment variables can be
+# supplied directly by the deployment environment.
 load_dotenv()
 
+
+# =========================================================
+# MODEL CONFIGURATION
+# =========================================================
 
 MODEL_ID = os.getenv(
     "MODEL_ID",
@@ -26,6 +30,8 @@ MAX_NEW_TOKENS = int(
     )
 )
 
+HF_TOKEN = os.getenv("HF_TOKEN")
+
 TORCH_DTYPE = os.getenv(
     "TORCH_DTYPE",
     "float16",
@@ -43,7 +49,7 @@ DEVICE_MAP = os.getenv(
 
 HOST = os.getenv(
     "HOST",
-    "127.0.0.1",
+    "0.0.0.0",
 )
 
 PORT = int(

@@ -7,6 +7,7 @@ from app.core.config import (
     ADAPTER_ID,
     TORCH_DTYPE,
     DEVICE_MAP,
+    HF_TOKEN,
 )
 
 
@@ -32,18 +33,21 @@ def load_model():
     dtype = get_torch_dtype(TORCH_DTYPE)
 
     tokenizer = AutoTokenizer.from_pretrained(
-        ADAPTER_ID
+        ADAPTER_ID,
+        token=HF_TOKEN,
     )
 
     base_model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
         dtype=dtype,
         device_map=DEVICE_MAP,
+         token=HF_TOKEN,
     )
 
     model = PeftModel.from_pretrained(
         base_model,
         ADAPTER_ID,
+        token = HF_TOKEN,
     )
 
     model.eval()

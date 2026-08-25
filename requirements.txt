@@ -1,9 +1,10 @@
 fastapi==0.136.1
 uvicorn==0.46.0
 pydantic==2.12.3
+python-dotenv==1.1.0
 
-torch==2.10.0+cu128
-transformers==5.1.1
+
+transformers==5.15.1
 peft==0.20.0
 accelerate==1.14.0
 safetensors==0.8.0
