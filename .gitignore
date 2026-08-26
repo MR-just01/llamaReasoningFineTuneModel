@@ -1,11 +1,18 @@
+@"
 # Python
 __pycache__/
 *.py[cod]
+.pytest_cache/
 
-# Environment
-.env
+# Virtual environments
 .venv/
 venv/
 
-# Generated benchmark/evaluation results
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Generated evaluation results
 results/*.csv
+"@ | Set-Content .gitignore

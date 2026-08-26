@@ -3,11 +3,11 @@ uvicorn==0.46.0
 pydantic==2.12.3
 python-dotenv==1.1.0
 
-
 transformers==5.15.1
 peft==0.20.0
 accelerate==1.14.0
 safetensors==0.8.0
 huggingface-hub==1.11.0
+torchao==0.16.0
 
 requests==2.32.4
